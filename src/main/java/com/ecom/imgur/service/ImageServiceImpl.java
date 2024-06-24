@@ -19,18 +19,17 @@ public class ImageServiceImpl implements ImageService{
     @Autowired
     private ImagesClient imageClient;
     @Autowired
-    private
-    UserAccountClient userAccountClient;
-    @Override public
-    ImagesResponse getImages(String username) {
+    private UserAccountClient userAccountClient;
+
+    @Override
+    public ImagesResponse getImages(String username) {
         ImagesResponse imageDetail =imageClient.getImageDetails(username);
         System.out.println(" Image Details "+imageDetail.toString());
         return imageDetail;
     }
 
     @Override
-    public
-    ImageResponse saveImage(String userName, MultipartFile file) {
+    public ImageResponse saveImage( MultipartFile file) {
         ImageResponse imgurApiResponse=imageClient.UploadImage(file);
         return imgurApiResponse;
     }
@@ -41,8 +40,7 @@ public class ImageServiceImpl implements ImageService{
     }
 
     @Override
-    public
-    UserAccountResponse getUserAccountInfo(String userAccountName) {
+    public UserAccountResponse getUserAccountInfo(String userAccountName) {
        return userAccountClient.getUserAccountInfo(userAccountName);
     }
 

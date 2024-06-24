@@ -2,6 +2,7 @@ package com.ecom.imgur.client.config;
 
 import com.ecom.imgur.client.model.OAuthToken;
 import com.ecom.imgur.common.Constant;
+import com.ecom.imgur.exception.ApiException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpEntity;
@@ -48,11 +49,11 @@ public class OAuth2Service {
        try {
            accessTokenResponse = restTemplate.exchange(oAuthConfigurations.getTokenUri(), HttpMethod.POST, requestEntity, OAuthToken.class).getBody();
            Assert.notNull(accessTokenResponse, () -> "Access token is generated for : '" + oAuthConfigurations.getClientId());
+           log.debug(" oAuth Token details {}",accessTokenResponse.getAccess_token());
            return accessTokenResponse;
 
        } catch (OAuth2AuthorizationException ex) {
-           ex.printStackTrace();
+           throw new ApiException(Constant.OAUTH_ERROR_CODE,"OAuth2AuthorizationException",ex);
        }
-       return null;
    }
 }

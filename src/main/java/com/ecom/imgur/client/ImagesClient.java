@@ -42,10 +42,10 @@ public class ImagesClient {
     public
     ImageResponse UploadImage(MultipartFile file) {
 
-
+        log.info("Upload Image file name " + file.getName());
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.MULTIPART_FORM_DATA);
-        headers.add(Constant.AUTHORIZATION,Constant.BEARER+oAuth2Service.getAccessToken().getAccess_token());
+        headers.add(Constant.AUTHORIZATION, Constant.BEARER + oAuth2Service.getAccessToken().getAccess_token());
 
         MultiValueMap<String, Object> body = new LinkedMultiValueMap<>();
         body.add("image", file.getResource());
@@ -56,7 +56,7 @@ public class ImagesClient {
                     HttpMethod.POST, requestEntity, ImageResponse.class);
 
             ImageResponse imgurApiResponse = responseEntity.getBody();
-            System.out.println(" ***** " + imgurApiResponse.getImageInfo().getAccountUrl());
+            log.debug(" ***** Successfully upload Image Account Url {}", imgurApiResponse.getImageInfo().getAccountUrl());
             if (imgurApiResponse != null && imgurApiResponse.isSuccess()) {
                 return imgurApiResponse;
             } else {
@@ -64,7 +64,7 @@ public class ImagesClient {
                 throw new ImageAPIException(responseEntity.getStatusCode().toString(), responseEntity.getBody().toString());
             }
         } catch (HttpClientErrorException ex) {
-            throw new ImageAPIException("Image upload failed: " + ex.getMessage(),"");
+            throw new ImageAPIException("ERROR_CODE","Image upload failed: " + ex.getMessage());
         }
     }
 
@@ -96,7 +96,7 @@ public class ImagesClient {
 
     public void deleteImage(String imageId){
 
-        ResponseEntity<Void> deleteResponse = restClient.delete()
+        restClient.delete()
                 .uri(oAuthConfigurations.getDeleteImageUri(),imageId)
                 .header(Constant.AUTHORIZATION, Constant.BEARER + oAuth2Service.getAccessToken().getAccess_token())
                 .accept(MediaType.APPLICATION_JSON)
@@ -112,6 +112,5 @@ public class ImagesClient {
                     throw new ImageAPIException(response.getStatusCode().toString(), responseBody);
                 })
                 .toBodilessEntity();
-        System.out.println("Delete file response " + deleteResponse);
     }
 }

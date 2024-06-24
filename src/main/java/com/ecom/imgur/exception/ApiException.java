@@ -16,7 +16,7 @@ public class ApiException extends RuntimeException{
      * @param message   The human-readable message associated with the exception.
      * @param cause     The underlying cause of the exception.
      */
-    protected ApiException(String errorCode, String message, Throwable cause) {
+    public ApiException(String errorCode, String message, Throwable cause) {
         super(message, cause);
         this.errorCode = errorCode;
         this.message = message;

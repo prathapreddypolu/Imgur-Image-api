@@ -8,7 +8,7 @@ import org.springframework.web.multipart.MultipartFile;
 public interface ImageService {
     ImagesResponse getImages(String username);
 
-    ImageResponse saveImage(String userName, MultipartFile file);
+    ImageResponse saveImage(MultipartFile file);
 
     void deleteImage(String imageId);
 

@@ -22,23 +22,29 @@ public class ImageController {
     @GetMapping("/view/{username}")
     public ResponseEntity<ImagesResponse> viewImage(@PathVariable String username) {
         ImagesResponse images=imageService.getImages(username);
+        log.info("Successfully list of Images sent "+images.getImages());
         return ResponseEntity.ok().body(images);
     }
 
-    @PostMapping("/upload/{username}")
-    public ResponseEntity<ImageResponse> uploadImage(@PathVariable String username, @RequestParam("file") MultipartFile file) {
-
-        ImageResponse imgurApiResponse= imageService.saveImage(username,file);
+    @PostMapping("/upload/")
+    public ResponseEntity<ImageResponse> uploadImage( @RequestParam("file") MultipartFile file) {
+        log.info("Upload image file name {} ",file.getName());
+        ImageResponse imgurApiResponse= imageService.saveImage(file);
+        log.info("Successfully image Upload  {} for ",file.getName());
         return ResponseEntity.ok(imgurApiResponse);
     }
 
     @DeleteMapping("/delete/{imageId}")
     public ResponseEntity<String> deleteImageForAuthenticatedUser(@PathVariable String imageId) {
         imageService.deleteImage(imageId);
-        log.info("Image deleted successfully for user: {}", imageId);
-        return ResponseEntity.ok("Image deleted successfully");
+        log.info("{} Image Successfully deleted", imageId);
+        return ResponseEntity.ok(imageId+ "Image Successfully deleted");
     }
-
+    /**
+     *
+     * @param userAccountName
+     * @return UserAccountResponse
+     */
     @GetMapping("/user/{userAccountName}")
     public ResponseEntity<UserAccountResponse> userAccountInfo(@PathVariable String userAccountName) {
         UserAccountResponse userAccountInfo = imageService.getUserAccountInfo(userAccountName);

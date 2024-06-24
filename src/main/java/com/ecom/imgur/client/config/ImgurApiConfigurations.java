@@ -48,9 +48,4 @@ public class ImgurApiConfigurations {
      * The URI for deleting an image.
      */
     private String uploadImageUri;
-    /**
-     * The URI for user account details
-     */
-    private String userAcountUri;
-
 }

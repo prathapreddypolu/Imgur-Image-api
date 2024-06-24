@@ -1,5 +1,6 @@
 package com.ecom.imgur.exception;
 
+import com.ecom.imgur.common.Constant;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -13,10 +14,10 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 @Slf4j
 public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 
-    @ExceptionHandler(ApiException.class)
-    public  ResponseEntity<ApiError> internalServerException(ApiException ex) {
-        ApiError apiError = new ApiError("500",
-                HttpStatus.INTERNAL_SERVER_ERROR.name());
-        return new ResponseEntity<>(apiError, HttpStatus.INTERNAL_SERVER_ERROR);
+    @ExceptionHandler(UserException.class)
+    public ResponseEntity<ApiError> internalServerException(UserException ex) {
+        ApiError apiError = new ApiError(Constant.USER_ERROR_CODE,
+                Constant.USER_ERROR_DESC);
+        return new ResponseEntity<>(apiError, HttpStatus.BAD_REQUEST);
     }
 }
