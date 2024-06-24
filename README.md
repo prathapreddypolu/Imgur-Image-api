@@ -20,9 +20,9 @@ API End points :
 
  User Registration end points:
       GET :   /api/user/registration  - Save the user account details(H2 DB) . If user details already existing we are not adding .
-      GET :   /api/user//username}  -  Get User account details by using the userName 
+      GET :   /api/user/{username}  -  Get User account details by using the userName 
 
- Kafka :
+ Kafka Implementation :
       GET :   /api/user/publish - publishing the basic user details in Kafka topic
       GET :   /api/image/publish - publishing the Image details in Kafka topic 
     
