@@ -1,0 +1,19 @@
+spring:
+  application:
+    name: imgur-image-api
+  h2:
+    console:
+      path: /h2-console
+      enabled: true
+
+imgur:
+  image:
+    api:
+      client-id: d8ab0081bba2543
+      client-secrets: 2678df7be7cf1ea650f049b7bbf9f92fb7f33cfd
+      grant-type: refresh_token
+      refresh-token: bd57f213ad290782670c202b0c080fb01250fdb6
+      token-uri: https://api.imgur.com/oauth2/token
+      delete-image-uri: https://api.imgur.com/3/image/{imageId}
+      get-images-uri: https://api.imgur.com/3/account/{userName}/images/
+      upload-image-uri: https://api.imgur.com/3/image
