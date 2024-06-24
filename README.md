@@ -6,16 +6,16 @@ Imgur-Image-api is a spring boot RESTFull API . This API allows user to register
 API Features:
 
 1) User Registration : Register users with basic information .
-2) Images Management : upload Images ,view images,delete Images and Get user Image account details.
+2) Images Management : upload Images ,view images,delete Images and Get user Image account details after basic user authentication
 3) Imgur API Integration : API interact with Imgur api with oAuth authentication.
 4) User and Image details can publish in kafka topic .
 
 API End points :
 
  Image end points : 
-      POST :  /api/images/upload  - using endpoint we can upload Images in user account
-      GET :   /api/images/view/{username} - Based up on the user account we can view the all the Images
-      DELETE: /api/images/delete/{imageId} - Delete image based up on the Image ID
+      POST :  /api/images/upload  - using endpoint we can upload Images in user account.
+      GET :   /api/images/view/{username} - Based up on the user account we can view the all the Images.
+      DELETE: /api/images/delete/{imageId} - Delete image based up on the Image ID.
       GET :   /api/images/user/{userAccountName} - Getting user account details,we check whether account status and other details .
 
  User Registration end points:

@@ -14,6 +14,7 @@ import lombok.experimental.UtilityClass;
      public final String USER_ERROR_CODE ="1000";
      public final String USER_ERROR_DESC="User is already Registered";
      public final String OAUTH_ERROR_CODE ="2000";
+     public final String USER_AUTH_FAILED="User Authentication Failed";
 
 
 }
