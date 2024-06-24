@@ -2,14 +2,11 @@ package com.ecom.imgur.controller;
 
 import com.ecom.imgur.model.User;
 import com.ecom.imgur.service.UserServiceImpl;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -20,7 +17,11 @@ public class UserController {
 
     @Autowired
     private UserServiceImpl userService;
-
+    /**
+     *
+     * @param user
+     * @return User response Object
+     */
     @GetMapping("/registration")
     public
     ResponseEntity<User> registerUser(@RequestBody User user) {
@@ -29,7 +30,11 @@ public class UserController {
         log.info("Registered user successfully: {}", user.getUsername());
         return new ResponseEntity<>(registeredUser, HttpStatus.CREATED);
     }
-
+    /**
+     *
+     * @param username
+     * @return User response Object
+     */
    @GetMapping("/{username}")
     public ResponseEntity<User> getUserByName(@PathVariable String username) {
         User user = userService.getUserByUsername(username);

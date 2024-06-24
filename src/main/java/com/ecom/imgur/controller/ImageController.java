@@ -19,13 +19,22 @@ public class ImageController {
     @Autowired
     private ImageServiceImpl imageService;
 
+    /**
+     *
+     * @param username
+     * @return List of Images response ImagesResponse Object
+     */
+
     @GetMapping("/view/{username}")
     public ResponseEntity<ImagesResponse> viewImage(@PathVariable String username) {
         ImagesResponse images=imageService.getImages(username);
         log.info("Successfully list of Images sent "+images.getImages());
         return ResponseEntity.ok().body(images);
     }
-
+    /**
+     *
+     * @return Uploaded image ImageResponse object
+     */
     @PostMapping("/upload/")
     public ResponseEntity<ImageResponse> uploadImage( @RequestParam("file") MultipartFile file) {
         log.info("Upload image file name {} ",file.getName());
@@ -34,6 +43,11 @@ public class ImageController {
         return ResponseEntity.ok(imgurApiResponse);
     }
 
+    /**
+     *
+     * @param imageId
+     * @return deleted imageId
+     */
     @DeleteMapping("/delete/{imageId}")
     public ResponseEntity<String> deleteImageForAuthenticatedUser(@PathVariable String imageId) {
         imageService.deleteImage(imageId);

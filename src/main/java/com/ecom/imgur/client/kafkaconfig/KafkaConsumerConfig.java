@@ -16,6 +16,12 @@ import org.springframework.kafka.listener.ContainerProperties.AckMode;
 @EnableKafka
 @Configuration
 public class KafkaConsumerConfig {
+
+    /**
+     * Creates a Kafka ConsumerFactory for consuming messages.
+     *
+     * @return The configured ConsumerFactory.
+     */
     @Bean
     public ConsumerFactory<String, String> consumerFactory() {
         Map<String, Object> props = new HashMap<>();
@@ -26,6 +32,11 @@ public class KafkaConsumerConfig {
         props.put(ConsumerConfig.MAX_POLL_RECORDS_CONFIG, "50");
         return new DefaultKafkaConsumerFactory<>(props);
     }
+    /**
+     * Creates a ConcurrentKafkaListenerContainerFactory for Kafka message listeners.
+     *
+     * @return The configured ConcurrentKafkaListenerContainerFactory.
+     */
     @Bean
     public ConcurrentKafkaListenerContainerFactory<String, String> kafkaListenerContainerFactory() {
         ConcurrentKafkaListenerContainerFactory<String, String> factory = new ConcurrentKafkaListenerContainerFactory<>();

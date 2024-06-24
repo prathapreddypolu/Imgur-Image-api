@@ -18,32 +18,38 @@ public class UserServiceImpl implements UserService{
     @Autowired
     private UserRepository userRepository;
     @Override
-    public
-    User registerUser(User user) {
+
+    /**
+     *
+     * @param user
+     * @return User response object
+     */
+    public User registerUser(User user) {
         if (userRepository.findByUsername(user.getUsername()).isPresent()) {
             throw new UserException("Username already exists");
         }
-        User newUser = new User();
-        newUser.setUsername(user.getUsername());
-        newUser.setPassword(user.getPassword());
         return userRepository.save(user);
     }
-
+    /**
+     *
+     * @param username
+     * @return User response object
+     */
     @Override
     public User getUserByUsername(String username) {
        return userRepository.findByUsername(username)
                 .orElseThrow(() -> new UserNotFoundException("User not found"));
     }
-
+    /**
+     *
+     * @param userName
+     * @param password
+     * @return return user validation flag
+     */
     public boolean authenticateUser(String userName, String password)
     {
       User user= userRepository.findByUsername(userName)
                .orElseThrow(() -> new UserNotFoundException("User not found"));
-
-      if(userName.equals(user.getUsername()) && password.equals(user.getUsername()) )
-      {
-          return true;
-      }
-      return false;
+      return userName.equals(user.getUsername()) && password.equals(user.getPassword());
     }
 }

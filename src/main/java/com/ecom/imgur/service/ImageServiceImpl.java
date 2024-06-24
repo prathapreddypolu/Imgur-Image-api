@@ -21,6 +21,11 @@ public class ImageServiceImpl implements ImageService{
     @Autowired
     private UserAccountClient userAccountClient;
 
+    /**
+     *
+     * @param username
+     * @return ImagesResponse response object
+     */
     @Override
     public ImagesResponse getImages(String username) {
         ImagesResponse imageDetail =imageClient.getImageDetails(username);
@@ -28,17 +33,31 @@ public class ImageServiceImpl implements ImageService{
         return imageDetail;
     }
 
+    /**
+     *
+     * @param file
+     * @return ImagesResponse response object
+     */
     @Override
     public ImageResponse saveImage( MultipartFile file) {
         ImageResponse imgurApiResponse=imageClient.UploadImage(file);
         return imgurApiResponse;
     }
-
+    /**
+     *
+     * @param imageId
+     * @return deleted Image ID
+     */
     @Override
     public void deleteImage(String imageId) {
         imageClient.deleteImage(imageId);
     }
 
+    /**
+     *
+     * @param userAccountName
+     * @return userAccountName response object
+     */
     @Override
     public UserAccountResponse getUserAccountInfo(String userAccountName) {
        return userAccountClient.getUserAccountInfo(userAccountName);

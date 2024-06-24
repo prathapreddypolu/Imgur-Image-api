@@ -73,8 +73,7 @@ public class ImagesClient {
      * @param userName The username of the user whose image details are to be retrieved.
      * @return An instance of ImgurResponse containing the image details.
      */
-    public
-    ImagesResponse getImageDetails(String userName)
+    public ImagesResponse getImageDetails(String userName)
     {
         return restClient.get()
                 .uri(oAuthConfigurations.getGetImagesUri(),userName)
