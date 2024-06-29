@@ -80,7 +80,15 @@
             <artifactId>junit</artifactId>
             <scope>test</scope>
         </dependency>
-    </dependencies>
+		<!-- https://mvnrepository.com/artifact/org.apache.kafka/kafka-streams-test-utils -->
+		<dependency>
+			<groupId>org.apache.kafka</groupId>
+			<artifactId>kafka-streams-test-utils</artifactId>
+			<scope>test</scope>
+		</dependency>
+
+
+	</dependencies>
 	<dependencyManagement>
 		<dependencies>
 			<dependency>

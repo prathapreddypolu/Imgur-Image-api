@@ -1,12 +1,11 @@
 package com.ecom.imgur.controller;
 
 import com.ecom.imgur.common.Constant;
-import com.ecom.imgur.exception.UserException;
-import com.ecom.imgur.exception.UserNotFoundException;
-import com.ecom.imgur.model.UserAccountResponse;
-import com.ecom.imgur.service.ImageServiceImpl;
+import com.ecom.imgur.exception.UserAuthenticationException;
 import com.ecom.imgur.model.ImageResponse;
 import com.ecom.imgur.model.ImagesResponse;
+import com.ecom.imgur.model.UserAccountResponse;
+import com.ecom.imgur.service.ImageServiceImpl;
 import com.ecom.imgur.service.UserServiceImpl;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,7 +26,7 @@ public class ImageController {
     private UserServiceImpl userService;
     /**
      *
-     * @param username
+     * @param username UserName
      * @return List of Images response ImagesResponse Object
      */
 
@@ -37,10 +36,10 @@ public class ImageController {
         if(userService.authenticateUser(userID ,password))
         {
             ImagesResponse images=imageService.getImages(username);
-            log.info("Successfully list of Images sent "+images.getImages());
+            log.info("Get the list of Images by User ID  "+images.getImages());
             return ResponseEntity.ok().body(images);
         }else {
-            throw new UserException(Constant.USER_AUTH_FAILED);
+            throw new UserAuthenticationException(Constant.USER_AUTH_FAILED);
         }
 
     }
@@ -53,16 +52,16 @@ public class ImageController {
         log.info("Upload image file name {} ",file.getName());
         if(userService.authenticateUser(userID ,password)) {
             ImageResponse imgurApiResponse = imageService.saveImage(file);
-            log.info("Successfully image Upload  {} for ", file.getName());
+            log.info("Successfully image Upload {}  ", file.getName());
             return ResponseEntity.ok(imgurApiResponse);
         }else {
-            throw new UserException(Constant.USER_AUTH_FAILED);
+            throw new UserAuthenticationException(Constant.USER_AUTH_FAILED);
         }
     }
 
     /**
      *
-     * @param imageId
+     * @param imageId -delete Image id
      * @return deleted imageId
      */
     @DeleteMapping("/delete/{imageId}")
@@ -72,12 +71,12 @@ public class ImageController {
         log.info("{} Image Successfully deleted", imageId);
         return ResponseEntity.ok(imageId+ "Image Successfully deleted");
         }else {
-            throw new UserException(Constant.USER_AUTH_FAILED);
+            throw new UserAuthenticationException(Constant.USER_AUTH_FAILED);
         }
     }
     /**
      *
-     * @param userAccountName
+     * @param userAccountName User Name
      * @return UserAccountResponse
      */
     @GetMapping("/user/{userAccountName}")

@@ -10,7 +10,7 @@ public interface ImageService {
 
     ImageResponse saveImage(MultipartFile file);
 
-    void deleteImage(String imageId);
+    String deleteImage(String imageId);
 
     UserAccountResponse getUserAccountInfo(String userAccountName);
 

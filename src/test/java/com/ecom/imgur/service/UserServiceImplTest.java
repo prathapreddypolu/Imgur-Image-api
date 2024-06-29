@@ -1,44 +1,44 @@
-/*
 package com.ecom.imgur.service;
 
-
+import com.ecom.imgur.exception.UserException;
 import com.ecom.imgur.exception.UserNotFoundException;
 import com.ecom.imgur.model.User;
 import com.ecom.imgur.repository.UserRepository;
-
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.when;
 
-@ExtendWith(MockitoExtension.class)
-@SpringBootTest(classes = { ImageServiceImpl.class })
+@ExtendWith(SpringExtension.class)
+@SpringBootTest(classes = { UserServiceImpl.class })
 public class UserServiceImplTest {
 
-    @Mock
+    @MockBean
     private UserRepository userRepository;
 
-    @InjectMocks
+    @Autowired
     private UserServiceImpl userService;
 
     @Test
-    public void testRegisterUser() throws Exception {
+    void testRegisterUser() {
         // Arrange
         User user = new User();
-        user.setUsername("fake-username");
-        user.setPassword("fake-password");
+        user.setUsername("test-username");
+        user.setPassword("test-password");
         User expectedUser = new User();
         expectedUser.setId(1L);
-        expectedUser.setUsername("fake-username");
-        expectedUser.setPassword("fake-password");
+        expectedUser.setUsername("test-username");
+        expectedUser.setPassword("test-password");
 
         when(userRepository.findByUsername(user.getUsername())).thenReturn(Optional.empty());
         when(userRepository.save(user)).thenReturn(expectedUser);
@@ -51,18 +51,16 @@ public class UserServiceImplTest {
     }
 
     @Test
-    public void testRegisterUserDuplicateUsername() throws Exception {
-        User user = new User();
-        user.setUsername("fake-username");
-        user.setPassword("fake-password");
+    void testRegisterUserWithUserNamePresent() {
+        User user = getUser("username","password");
 
         when(userRepository.findByUsername(user.getUsername())).thenReturn(Optional.of(user));
 
-       // assertThrows(I.class, () -> userService.registerUser(user));
+        assertThrows(UserException.class, () -> userService.registerUser(user));
     }
 
     @Test
-    public void testGetUserByUsername() throws Exception {
+    void testGetUserByUsername() {
         // Arrange
         String username = "username";
         User expectedUser = new User();
@@ -77,9 +75,52 @@ public class UserServiceImplTest {
     }
 
     @Test
-    public void testGetUserByUsernameNotFound() throws Exception {
-        String username = "fake-username";
+    void testGetUserByUsernameNotFound() {
+        String username = "username";
         when(userRepository.findByUsername(username)).thenReturn(Optional.empty());
         assertThrows(UserNotFoundException.class, () -> userService.getUserByUsername(username));
     }
-}*/
+
+    @Test
+    void testAuthenticateUserWhenTrue() {
+        String username = "test-username";
+        String password = "test-password";
+        User user = getUser(username,password);
+
+        when(userRepository.findByUsername(username)).thenReturn(Optional.of(user));
+
+        assertTrue(userService.authenticateUser(username, password));
+    }
+
+    @Test
+    void testAuthenticateUserWhenFalse() {
+        // Arrange
+        String username = "username";
+        String password = "password";
+        User user = new User();
+        user.setUsername("newUsername");
+        user.setPassword(password);
+
+        when(userRepository.findByUsername(username)).thenReturn(Optional.of(user));
+
+        assertFalse(userService.authenticateUser(username, password));
+    }
+
+    @Test
+    void testAuthenticateUserWhenUserNotFound() {
+        String username = "username";
+        String password = "password";
+
+        when(userRepository.findByUsername(username)).thenReturn(Optional.empty());
+
+        assertThrows(UserNotFoundException.class, () -> userService.authenticateUser(username, password));
+    }
+
+    private User getUser(String userName,String password){
+        User user = new User();
+        user.setUsername(userName);
+        user.setPassword(password);
+        return user;
+    }
+
+}

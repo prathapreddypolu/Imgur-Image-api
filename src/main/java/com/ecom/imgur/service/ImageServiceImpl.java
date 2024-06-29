@@ -40,7 +40,7 @@ public class ImageServiceImpl implements ImageService{
      */
     @Override
     public ImageResponse saveImage( MultipartFile file) {
-        ImageResponse imgurApiResponse=imageClient.UploadImage(file);
+        ImageResponse imgurApiResponse=imageClient.uploadImage(file);
         return imgurApiResponse;
     }
     /**
@@ -49,8 +49,9 @@ public class ImageServiceImpl implements ImageService{
      * @return deleted Image ID
      */
     @Override
-    public void deleteImage(String imageId) {
-        imageClient.deleteImage(imageId);
+    public String deleteImage(String imageId) {
+
+        return imageClient.deleteImage(imageId);
     }
 
     /**

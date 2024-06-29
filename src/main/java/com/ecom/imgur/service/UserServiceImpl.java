@@ -17,14 +17,14 @@ public class UserServiceImpl implements UserService{
 
     @Autowired
     private UserRepository userRepository;
-    @Override
 
     /**
      *
-     * @param user
+     * @param user register username
      * @return User response object
      */
-    public User registerUser(User user) {
+   @Override
+   public User registerUser(User user) {
         if (userRepository.findByUsername(user.getUsername()).isPresent()) {
             throw new UserException("Username already exists");
         }
@@ -32,7 +32,7 @@ public class UserServiceImpl implements UserService{
     }
     /**
      *
-     * @param username
+     * @param username User Name
      * @return User response object
      */
     @Override
@@ -42,8 +42,8 @@ public class UserServiceImpl implements UserService{
     }
     /**
      *
-     * @param userName
-     * @param password
+     * @param userName authentication user
+     * @param password authentication password
      * @return return user validation flag
      */
     public boolean authenticateUser(String userName, String password)

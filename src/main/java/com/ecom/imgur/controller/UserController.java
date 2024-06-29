@@ -19,7 +19,7 @@ public class UserController {
     private UserServiceImpl userService;
     /**
      *
-     * @param user
+     * @param user User
      * @return User response Object
      */
     @GetMapping("/registration")
@@ -32,7 +32,7 @@ public class UserController {
     }
     /**
      *
-     * @param username
+     * @param username User Name
      * @return User response Object
      */
    @GetMapping("/{username}")
