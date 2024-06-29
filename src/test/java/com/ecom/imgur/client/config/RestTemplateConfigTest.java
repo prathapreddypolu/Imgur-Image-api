@@ -14,7 +14,7 @@ public class RestTemplateConfigTest {
     private RestTemplate restTemplate;
 
     @Test
-    public void testRestClient() {
+    void testRestClient() {
         assertNotNull(restTemplate);
     }
 }

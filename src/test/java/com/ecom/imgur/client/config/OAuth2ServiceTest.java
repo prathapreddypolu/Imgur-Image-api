@@ -19,7 +19,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.when;
 
-@SpringBootTest
+@SpringBootTest(classes = {OAuth2Service.class})
 @ActiveProfiles("test")
 public class OAuth2ServiceTest {
 
@@ -36,7 +36,7 @@ public class OAuth2ServiceTest {
     ResponseEntity responseEntity;
 
     @Test
-    public void getAccessToken_shouldReturnAccessToken_whenApiReturnsToken() {
+    void getAccessToken_shouldReturnAccessToken_whenApiReturnsToken() {
         OAuthToken expectedTokenResponse = new OAuthToken();
         expectedTokenResponse.setAccess_token("24a594a9eae1a1618ccfa368a491e22e08341269");
 
@@ -59,7 +59,7 @@ public class OAuth2ServiceTest {
     }
 
     @Test
-    public void getAccessToken_shouldThrowException_whenApiReturnsError() {
+    void getAccessToken_shouldThrowException_whenApiReturnsError() {
         OAuthToken expectedTokenResponse = new OAuthToken();
         expectedTokenResponse.setAccess_token("24a594a9eae1a1618ccfa368a491e22e08341269");
 

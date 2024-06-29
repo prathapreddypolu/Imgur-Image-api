@@ -17,7 +17,7 @@ public class WebSecurityConfigTest {
     private WebSecurityConfig webSecurityConfig;
 
     @Test
-    public void testSecurityConfiguration() throws Exception {
+    void testSecurityConfiguration() throws Exception {
         HttpSecurity httpSecurity = mock(HttpSecurity.class);
         webSecurityConfig.securityFilterChain(httpSecurity);
         verify(webSecurityConfig, times(1)).securityFilterChain(any());

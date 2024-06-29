@@ -32,9 +32,7 @@ public class UserServiceImplTest {
     @Test
     void testRegisterUser() {
         // Arrange
-        User user = new User();
-        user.setUsername("test-username");
-        user.setPassword("test-password");
+        User user = getUser("test-username","test-password");
         User expectedUser = new User();
         expectedUser.setId(1L);
         expectedUser.setUsername("test-username");
